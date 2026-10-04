@@ -6,5 +6,4 @@ services:
     container_name: spingi
     restart: unless-stopped
     ports:
-      # Espone la porta 2999 sul server, che mappa alla 80 del container
-      - "2999:80"
+      - "2999:3000"
