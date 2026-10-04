@@ -5,7 +5,6 @@ services:
     build: .
     container_name: spingi
     restart: unless-stopped
-    network_mode: bridge
     ports:
       # Espone la porta 2999 sul server, che mappa alla 3000 del container
       - "2999:3000"
