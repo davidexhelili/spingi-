@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getUser, saveUser, deleteUser } from '../utils/storage'
-import { IconLogOut, IconArrowLeft } from '../components/Icons'
+import { IconLogOut, IconArrowLeft, IconUser, IconChart, IconTarget, IconFire, IconCheck } from '../components/Icons'
 import { ToastContext } from '../App'
 
 export default function ProfilePage({ onUpdate }) {
@@ -62,80 +62,60 @@ export default function ProfilePage({ onUpdate }) {
   }
 
   return (
-    <div className="page">
-      <div className="page-header">
-        <h1 className="page-title">Profilo</h1>
-        <p className="page-subtitle">Gestisci i tuoi dati personali</p>
-      </div>
-
-      {/* Avatar / Greeting */}
-      <div className="card mb-6 animate-fade-in-up" style={{ textAlign: 'center' }}>
-        <div style={{
-          width: '80px',
-          height: '80px',
-          borderRadius: 'var(--radius-full)',
-          background: 'var(--gradient-primary)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '36px',
-          margin: '0 auto var(--space-3)',
-        }}>
-          {form.name ? form.name[0].toUpperCase() : '👤'}
-        </div>
-        <h2 style={{ fontWeight: 700, fontSize: 'var(--font-xl)' }}>{form.name || 'Utente'}</h2>
-        {form.goal && (
-          <span className="badge badge-primary" style={{ marginTop: 'var(--space-2)', display: 'inline-flex' }}>
-            🎯 {form.goal}
-          </span>
-        )}
-        {bmi && (
-          <div style={{ marginTop: 'var(--space-3)' }}>
-            <span style={{ fontSize: 'var(--font-sm)', color: 'var(--text-secondary)' }}>BMI: </span>
-            <span style={{ fontWeight: 700, color: getBmiCategory(bmi).color }}>{bmi}</span>
-            <span style={{ fontSize: 'var(--font-xs)', color: getBmiCategory(bmi).color, marginLeft: 'var(--space-2)' }}>
-              ({getBmiCategory(bmi).label})
-            </span>
+    <div className="page" style={{ padding: 'calc(var(--space-8) + env(safe-area-inset-top)) var(--space-4) 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      
+      <div className="menu-card" style={{ width: '100%' }}>
+        <div className="menu-header">
+          <div className="menu-avatar">
+            {form.name ? form.name[0].toUpperCase() : '👤'}
           </div>
-        )}
-      </div>
-
-      {/* Edit form */}
-      <div className="card mb-6 animate-fade-in-up stagger-1">
-        <h3 style={{ fontWeight: 600, fontSize: 'var(--font-base)', marginBottom: 'var(--space-4)' }}>
-          Dati personali
-        </h3>
-
-        <div className="input-group">
-          <label className="input-label">Nome</label>
-          <input
-            type="text"
-            className="input-field"
-            value={form.name}
-            onChange={e => handleChange('name', e.target.value)}
-            id="profile-name"
-          />
+          <div className="menu-user-info">
+            <div className="menu-user-name">
+              {form.name || 'Utente'} <span className="menu-badge">{bmi ? `BMI ${bmi}` : 'Pro'}</span>
+            </div>
+            <div className="menu-user-email">
+              {form.goal ? `Obiettivo: ${form.goal}` : 'Nessun obiettivo impostato'}
+            </div>
+          </div>
         </div>
 
-        <div className="input-row">
-          <div className="input-group">
-            <label className="input-label">Età</label>
-            <input
-              type="number"
-              className="input-field"
-              value={form.age}
-              onChange={e => handleChange('age', e.target.value)}
-              id="profile-age"
-            />
+        <div className="menu-item" style={{ cursor: 'default' }}>
+          <div className="menu-item-icon"><IconUser size={18} /></div>
+          <div className="menu-item-content">
+            <span>Nome</span>
+            <input type="text" className="menu-item-input" placeholder="Il tuo nome" value={form.name} onChange={e => handleChange('name', e.target.value)} />
           </div>
-          <div className="input-group">
-            <label className="input-label">Genere</label>
-            <select
-              className="input-field"
-              value={form.gender}
-              onChange={e => handleChange('gender', e.target.value)}
-              id="profile-gender"
-            >
+        </div>
+
+        <div className="menu-item" style={{ cursor: 'default' }}>
+          <div className="menu-item-icon"><IconChart size={18} /></div>
+          <div className="menu-item-content">
+            <span>Età</span>
+            <input type="number" className="menu-item-input" placeholder="Anni" value={form.age} onChange={e => handleChange('age', e.target.value)} />
+          </div>
+        </div>
+        
+        <div className="menu-item" style={{ cursor: 'default' }}>
+          <div className="menu-item-icon"><IconTarget size={18} /></div>
+          <div className="menu-item-content">
+            <span>Peso</span>
+            <input type="number" className="menu-item-input" placeholder="kg" value={form.weight} onChange={e => handleChange('weight', e.target.value)} />
+          </div>
+        </div>
+
+        <div className="menu-item" style={{ cursor: 'default' }}>
+          <div className="menu-item-icon"><IconFire size={18} /></div>
+          <div className="menu-item-content">
+            <span>Altezza</span>
+            <input type="number" className="menu-item-input" placeholder="cm" value={form.height} onChange={e => handleChange('height', e.target.value)} />
+          </div>
+        </div>
+
+        <div className="menu-item" style={{ cursor: 'default' }}>
+          <div className="menu-item-icon"><IconUser size={18} /></div>
+          <div className="menu-item-content">
+            <span>Genere</span>
+            <select className="menu-item-select" value={form.gender} onChange={e => handleChange('gender', e.target.value)}>
               <option value="">Seleziona</option>
               <option value="male">Uomo</option>
               <option value="female">Donna</option>
@@ -144,62 +124,27 @@ export default function ProfilePage({ onUpdate }) {
           </div>
         </div>
 
-        <div className="input-row">
-          <div className="input-group">
-            <label className="input-label">Peso (kg)</label>
-            <input
-              type="number"
-              className="input-field"
-              step="0.1"
-              value={form.weight}
-              onChange={e => handleChange('weight', e.target.value)}
-              id="profile-weight"
-            />
+        <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '8px 0' }}></div>
+
+        <div className="menu-item" onClick={handleSave}>
+          <div className="menu-item-icon"><IconCheck size={18} /></div>
+          <div className="menu-item-content">
+            <span>Salva Modifiche</span>
+            <span style={{ fontSize: '12px', color: '#a3a3a3' }}>⌘ S</span>
           </div>
-          <div className="input-group">
-            <label className="input-label">Altezza (cm)</label>
-            <input
-              type="number"
-              className="input-field"
-              value={form.height}
-              onChange={e => handleChange('height', e.target.value)}
-              id="profile-height"
-            />
+        </div>
+        
+        <div className="menu-item danger" onClick={() => setShowDelete(true)}>
+          <div className="menu-item-icon"><IconLogOut size={18} /></div>
+          <div className="menu-item-content">
+            <span>Esci e Cancella</span>
           </div>
         </div>
 
-        <div className="input-group" style={{ marginBottom: 0 }}>
-          <label className="input-label">Obiettivo</label>
-          <div className="chip-group">
-            {['Forza', 'Ipertrofia', 'Dimagrimento', 'Resistenza', 'Benessere'].map(g => (
-              <button
-                key={g}
-                type="button"
-                className={`chip ${form.goal === g ? 'active' : ''}`}
-                onClick={() => handleChange('goal', g)}
-              >
-                {g}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
-      <button className="btn btn-primary btn-lg btn-full mb-4" onClick={handleSave} id="btn-save-profile">
-        Salva Modifiche ✓
-      </button>
-
-      <button
-        className="btn btn-ghost btn-full"
-        onClick={() => setShowDelete(true)}
-        style={{ color: 'var(--accent-danger)', marginBottom: 'var(--space-4)' }}
-        id="btn-logout"
-      >
-        <IconLogOut size={18} /> Esci e cancella dati
-      </button>
-
-      <p className="text-center text-secondary" style={{ fontSize: 'var(--font-xs)', paddingBottom: 'var(--space-8)' }}>
-        FitFlow v1.0 · I tuoi dati sono salvati localmente sul dispositivo
+      <p className="text-center text-secondary" style={{ fontSize: 'var(--font-xs)', marginTop: 'var(--space-6)', paddingBottom: 'var(--space-8)' }}>
+        I tuoi dati sono salvati localmente.
       </p>
 
       {/* Delete confirm */}
@@ -208,7 +153,7 @@ export default function ProfilePage({ onUpdate }) {
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <h2 className="modal-title">⚠️ Eliminare tutto?</h2>
             <p className="text-secondary">
-              Tutti i tuoi dati (profilo, schede, statistiche) saranno eliminati permanentemente.
+              Tutti i tuoi dati saranno eliminati permanentemente.
             </p>
             <div className="modal-actions">
               <button className="btn btn-secondary flex-1" onClick={() => setShowDelete(false)}>

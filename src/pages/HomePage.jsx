@@ -41,7 +41,7 @@ export default function HomePage() {
     <div className="page">
       <div className="page-header">
         <p className="text-secondary" style={{ fontSize: 'var(--font-sm)' }}>{greeting()}</p>
-        <h1 className="page-title">{user?.name || 'Atleta'} 💪</h1>
+        <h1 className="page-title">{user?.name || 'Atleta'}</h1>
       </div>
 
       {/* Resume active session */}
@@ -156,7 +156,7 @@ export default function HomePage() {
       {/* Empty state */}
       {workouts.length === 0 && !activeSession && (
         <div className="empty-state animate-fade-in-up stagger-2">
-          <div className="empty-icon">🏋️</div>
+          <div className="empty-icon"></div>
           <h2 className="empty-title">Nessuna scheda ancora</h2>
           <p className="empty-text">
             Crea la tua prima scheda di allenamento e inizia a tracciare i tuoi progressi!
